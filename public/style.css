@@ -1,0 +1,20 @@
+.row {
+  margin: 0;
+}
+.row [class^="col"] {
+  padding: 0;
+}
+.rowProduct {
+  border-bottom: 1px solid grey;
+}
+.col-cus-4 {
+  width: 30%;
+  padding: 0 16px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.container {
+  padding: 0;
+}
