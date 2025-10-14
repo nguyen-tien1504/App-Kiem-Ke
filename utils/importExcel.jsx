@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 const ImportExcel = ({ list, setList }) => {
   const inputFileRef = useRef();
   const handleImport = (e) => {
+    localStorage.removeItem("productList");
     const files = e.target.files;
     if (files.length) {
       const file = files[0];
@@ -15,11 +16,12 @@ const ImportExcel = ({ list, setList }) => {
 
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
+          console.log(rows);
           setList(
             rows.map((item) => {
               return {
                 ...item,
-                TonThucTe: item.TonThucTe ? item.TonThucTe : 0,
+                ["Thực tế"]: item["Thực tế"] ? item["Thực tế"] : 0,
               };
             })
           );
@@ -36,7 +38,7 @@ const ImportExcel = ({ list, setList }) => {
         ChenhLech: item.TonThucTe - item.TonHeThong,
       };
     });
-    const headings = [["MaSp", "TenSp", "TonHeThong", "TonThucTe", "ChenhLech"]];
+    const headings = [["Mã SP", "Phân loại SP", "Tên SP", "SL", "Thực Tế", "ChenhLech"]];
     const wb = utils.book_new();
     const ws = utils.json_to_sheet([]);
     utils.sheet_add_aoa(ws, headings);

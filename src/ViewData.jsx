@@ -7,13 +7,15 @@ const ViewData = () => {
     if (saved) setList(JSON.parse(saved));
   }, []);
   return (
-    <div className="p-2">
+    <div
+      className="p-2"
+      style={{ fontSize: "14px" }}>
       <div className="row text-center">
-        <div className="col-2">Ma sp</div>
-        <div className="col-4">Ten sp</div>
-        <div className="col-2">Ton he thong</div>
-        <div className="col-2">Ton thuc te</div>
-        <div className="col-2">Chenh lech</div>
+        <div className="col-2">Mã SP</div>
+        <div className="col-5">Tên SP</div>
+        <div className="col-2">SL</div>
+        <div className="col-2">Thực tế</div>
+        <div className="col-1">Chênh lệch</div>
       </div>
       <div
         className="overflow-auto mt-2"
@@ -22,13 +24,13 @@ const ViewData = () => {
           <div
             key={item.MaSp}
             className={`row px-0 py-1 text-center rowProduct ${
-              item.TonThucTe == 0 ? "bg-danger-subtle" : ""
+              item["Thực tế"] == 0 ? "bg-danger-subtle" : ""
             }`}>
-            <div className="col-2">{item.MaSp}</div>
-            <div className="col-4">{item.TenSp}</div>
-            <div className="col-2">{item.TonHeThong}</div>
-            <div className="col-2">{item.TonThucTe}</div>
-            <div className="col-2">{item.TonThucTe - item.TonHeThong}</div>
+            <div className="col-2">{item["Mã SP"]}</div>
+            <div className="col-5">{item["Tên SP"]}</div>
+            <div className="col-2">{item["SL"]}</div>
+            <div className="col-2">{item["Thực tế"]}</div>
+            <div className="col-1">{item["Thực tế"] - item["SL"]}</div>
           </div>
         ))}
       </div>

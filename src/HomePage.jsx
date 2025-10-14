@@ -20,22 +20,22 @@ function HomePage() {
 
   const onChangeQuantity = (quantity) => {
     if (!selectedMasp) return;
-    const findProduct = list.find((p) => p.MaSp === selectedMasp);
+    const findProduct = list.find((p) => p['Mã SP'] === selectedMasp);
     if (amount) {
-      findProduct.TonThucTe = Number(amount);
+      findProduct['Thực tế'] = Number(amount);
       setList([...list]);
       setAmount("");
       return;
     }
     if (findProduct) {
-      findProduct.TonThucTe += Number(quantity);
+      findProduct['Thực tế'] += Number(quantity);
       setList([...list]);
     }
   };
   const data = list.filter(
     (item) =>
-      String(item.MaSp).toLowerCase().includes(searchValue.toLowerCase()) ||
-      String(item.TenSp).toLowerCase().includes(searchValue.toLowerCase())
+      String(item['Mã SP']).toLowerCase().includes(searchValue.toLowerCase()) ||
+      String(item['Tên SP']).toLowerCase().includes(searchValue.toLowerCase())
   );
   return (
     <div
@@ -50,10 +50,10 @@ function HomePage() {
 
       <div className="container mt-3">
         <div className="row text-center">
-          <div className="col-2">Ma sp</div>
-          <div className="col-6">Ten sp</div>
-          <div className="col-2">Ton he thong</div>
-          <div className="col-2">Ton thuc te</div>
+          <div className="col-2">Mã SP</div>
+          <div className="col-6">Tên SP</div>
+          <div className="col-2">SL</div>
+          <div className="col-2">Thực tế</div>
         </div>
         <div
           className="row overflow-auto g-0 align-content-start"
@@ -63,9 +63,9 @@ function HomePage() {
               item={item}
               key={index}
               onHandleClick={() =>
-                setSelectedMasp((prev) => (prev == item.MaSp ? null : item.MaSp))
+                setSelectedMasp((prev) => (prev == item["Mã SP"] ? null : item["Mã SP"]))
               }
-              isSelected={item.MaSp == selectedMasp}
+              isSelected={item["Mã SP"] == selectedMasp}
             />
           ))}
         </div>
