@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Row from "../components/row";
 
 const ViewData = () => {
   const [list, setList] = useState([]);
@@ -20,17 +21,16 @@ const ViewData = () => {
       <div
         className="overflow-auto mt-2"
         style={{ height: "65vh" }}>
-        {list.map((item) => (
+        {list.map((item,index) => (
           <div
-            key={item.MaSp}
-            className={`row px-0 py-1 text-center rowProduct ${
+            key={index}
+            className={`text-center ${
               item["Thực tế"] == 0 ? "bg-danger-subtle" : ""
             }`}>
-            <div className="col-2">{item["Mã SP"]}</div>
-            <div className="col-5">{item["Tên SP"]}</div>
-            <div className="col-2">{item["SL"]}</div>
-            <div className="col-2">{item["Thực tế"]}</div>
-            <div className="col-1">{item["Thực tế"] - item["SL"]}</div>
+            <Row
+              item={item}
+              showDiff
+            />
           </div>
         ))}
       </div>

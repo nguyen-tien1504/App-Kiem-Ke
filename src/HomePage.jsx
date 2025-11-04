@@ -6,13 +6,11 @@ function HomePage() {
   const [searchValue, setSearchValue] = useState("");
   const [selectedMasp, setSelectedMasp] = useState(null);
   const [amount, setAmount] = useState("");
-
   useEffect(() => {
     if (list && list.length > 0) {
       localStorage.setItem("productList", JSON.stringify(list));
     }
   }, [list]);
-
   useEffect(() => {
     const saved = localStorage.getItem("productList");
     if (saved) setList(JSON.parse(saved));

@@ -16,15 +16,16 @@ const ImportExcel = ({ list, setList }) => {
 
         if (sheets.length) {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-          console.log(rows);
           setList(
             rows.map((item) => {
+              const { ["Mã CH"]: _, ["Quy cách"]: __, ["Đơn vị"]: ___, ...rest } = item;
               return {
-                ...item,
+                ...rest,
                 ["Thực tế"]: item["Thực tế"] ? item["Thực tế"] : 0,
               };
             })
           );
+          localStorage.setItem("productList", JSON.stringify(list));
         }
       };
       reader.readAsArrayBuffer(file);
@@ -32,13 +33,16 @@ const ImportExcel = ({ list, setList }) => {
   };
 
   const handleExport = () => {
+    const headings = [["Mã SP", "Tên SP", "Phân loại SP", "SL", "Thực tế", "Chênh lệch"]];
     const dataExport = list.map((item) => {
+      console.log(item);
+      
+      const reordered = Object.fromEntries(headings[0].map((key) => [key, item[key]]));
       return {
-        ...item,
-        ChenhLech: item.TonThucTe - item.TonHeThong,
+        ...reordered,
+        ["Chênh lệch"]: item["Thực tế"] - item["SL"],
       };
     });
-    const headings = [["Mã SP", "Phân loại SP", "Tên SP", "SL", "Thực Tế", "ChenhLech"]];
     const wb = utils.book_new();
     const ws = utils.json_to_sheet([]);
     utils.sheet_add_aoa(ws, headings);
