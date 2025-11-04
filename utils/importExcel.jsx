@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useRef } from "react";
 import { read, utils, writeFile } from "xlsx";
 import PropTypes from "prop-types";
