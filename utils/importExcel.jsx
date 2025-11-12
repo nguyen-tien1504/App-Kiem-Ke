@@ -72,6 +72,10 @@ const ImportExcel = ({ list, setList }) => {
         onClick={handleExport}>
         Xuat excel
       </button>
+      <button className="btn btn-danger" onClick={()=>{
+        setList([]);
+        localStorage.removeItem("productList");
+      }}>Xoa du lieu</button>
     </div>
   );
 };
