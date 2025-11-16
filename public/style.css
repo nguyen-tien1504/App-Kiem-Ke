@@ -22,3 +22,21 @@ a {
 .modal-open {
   padding: 0 !important ;
 }
+.fs-cus-12 {
+  font-size: 12px;
+}
+.delete-product-confirmation {
+  z-index: 10;
+}
+.delete-product-confirmation::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent; /* Adjust size as needed */
+  border-right: 6px solid transparent; /* Adjust size as needed */
+  border-bottom: 12px solid rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important; /* Color and height of the triangle */
+  z-index: 404;
+  top: -10px;
+  left: 45px;
+}

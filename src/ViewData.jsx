@@ -53,13 +53,13 @@ const ViewData = () => {
   return (
     <div
       className="p-2"
-      style={{ fontSize: "14px" }}>
+      style={{ fontSize: "12px" }}>
       <div className="row text-center">
         <div className="col-2">Mã SP</div>
-        <div className="col-5">Tên SP</div>
+        <div className="col-4">Tên SP</div>
         <div className="col-2">SL</div>
         <div className="col-2">Thực tế</div>
-        <div className="col-1">Chênh lệch</div>
+        <div className="col-2">Chênh lệch</div>
       </div>
       <div
         className="overflow-auto mt-2"
