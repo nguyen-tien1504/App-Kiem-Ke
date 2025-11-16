@@ -27,7 +27,7 @@ const Navbar = () => {
                   className="nav-link active text-white"
                   aria-current="page"
                   to={"/"}>
-                  Trang chu
+                  Trang chủ
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -35,7 +35,7 @@ const Navbar = () => {
                   className="nav-link active text-white"
                   aria-current="page"
                   to={"/viewData"}>
-                  Xem du lieu
+                  Xem dữ liệu
                 </NavLink>
               </li>
             </ul>

@@ -26,18 +26,20 @@ const ImportExcel = ({ list, setList }) => {
               };
             })
           );
+
           localStorage.setItem("productList", JSON.stringify(list));
         }
       };
       reader.readAsArrayBuffer(file);
-    }
+    } else return;
+    
+    // reset du lieu input file de lan sau chon cung file van load duoc
+    e.target.value = null;
   };
 
   const handleExport = () => {
     const headings = [["Mã SP", "Tên SP", "Phân loại SP", "SL", "Thực tế", "Chênh lệch"]];
     const dataExport = list.map((item) => {
-      console.log(item);
-      
       const reordered = Object.fromEntries(headings[0].map((key) => [key, item[key]]));
       return {
         ...reordered,
@@ -65,17 +67,21 @@ const ImportExcel = ({ list, setList }) => {
       <button
         className="btn btn-primary"
         onClick={() => inputFileRef.current.click()}>
-        Nhap excel
+        Nhập excel
       </button>
       <button
         className="btn btn-primary"
         onClick={handleExport}>
-        Xuat excel
+        Xuất excel
       </button>
-      <button className="btn btn-danger" onClick={()=>{
-        setList([]);
-        localStorage.removeItem("productList");
-      }}>Xoa du lieu</button>
+      <button
+        className="btn btn-danger"
+        onClick={() => {
+          setList([]);
+          localStorage.removeItem("productList");
+        }}>
+        Xóa dữ liệu
+      </button>
     </div>
   );
 };

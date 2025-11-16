@@ -3,15 +3,20 @@ import Row from "../components/row";
 
 const ViewData = () => {
   const [list, setList] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [filterType, setFilterType] = useState("all");
-  const [sortType, setSortType] = useState("maSP-asc");
-
+  // const [searchValue, setSearchValue] = useState("");
+  // const [filterType, setFilterType] = useState("all");
+  // const [sortType, setSortType] = useState("maSP-asc");
+  const [filteredData, setFilteredData] = useState({
+    searchValue: "",
+    filterType: "all",
+    sortType: "maSP-asc",
+  });
   // --- staged (tạm) states for modal; only commit to main states on "Ap dung"
-  const [stagedSearch, setStagedSearch] = useState(searchValue);
-  const [stagedFilterType, setStagedFilterType] = useState(filterType);
-  const [stagedSortType, setStagedSortType] = useState(sortType);
-
+  const [stagedFilterData, setStagedFilterData] = useState({
+    searchValue: filteredData.searchValue,
+    filterType: filteredData.filterType,
+    sortType: filteredData.sortType,
+  });
   useEffect(() => {
     const saved = localStorage.getItem("productList");
     if (saved) setList(JSON.parse(saved));
@@ -19,28 +24,31 @@ const ViewData = () => {
 
   const data = list.filter(
     (item) =>
-      String(item["Mã SP"]).toLowerCase().includes(searchValue.toLowerCase()) ||
-      String(item["Tên SP"]).toLowerCase().includes(searchValue.toLowerCase())
+      String(item["Mã SP"])
+        .toLowerCase()
+        .includes(filteredData.searchValue.toLowerCase()) ||
+      String(item["Tên SP"])
+        .toLowerCase()
+        .includes(filteredData.searchValue.toLowerCase())
   );
 
   const filteredList = data.filter((item) => {
     const diff = item["Thực tế"] - item["SL"];
-    if (filterType === "zero") return diff === 0;
-    if (filterType === "positive") return diff > 0;
-    if (filterType === "negative") return diff < 0;
+    if (filteredData.filterType === "zero") return diff === 0;
+    if (filteredData.filterType === "positive") return diff > 0;
+    if (filteredData.filterType === "negative") return diff < 0;
     return true;
   });
 
   const sortedList = [...filteredList].sort((a, b) => {
-    if (sortType === "maSP-asc") return a["Mã SP"].localeCompare(b["Mã SP"]);
-    if (sortType === "maSP-desc") return b["Mã SP"].localeCompare(a["Mã SP"]);
+    if (filteredData.sortType === "maSP-asc") return a["Mã SP"].localeCompare(b["Mã SP"]);
+    if (filteredData.sortType === "maSP-desc")
+      return b["Mã SP"].localeCompare(a["Mã SP"]);
     return 0;
   });
 
   const applyFilters = () => {
-    setSearchValue(stagedSearch);
-    setFilterType(stagedFilterType);
-    setSortType(stagedSortType);
+    setFilteredData({ ...stagedFilterData });
   };
   return (
     <div
@@ -77,7 +85,7 @@ const ViewData = () => {
           className="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal">
-          Tim kiem nang cao
+          Tìm kiếm nâng cao
         </button>
 
         {/* Tim kiem nang cao modal */}
@@ -93,7 +101,7 @@ const ViewData = () => {
                 <h1
                   className="modal-title fs-5"
                   id="exampleModalLabel">
-                  Tim kiem nang cao
+                  Tìm kiếm nâng cao
                 </h1>
                 <button
                   type="button"
@@ -110,16 +118,16 @@ const ViewData = () => {
                     className="form-control"
                     id="productSearching"
                     placeholder="Tim kiem san pham"
-                    value={stagedSearch}
-                    onChange={(e) => setStagedSearch(e.target.value)}
+                    value={stagedFilterData.searchValue}
+                    onChange={(e) => setStagedFilterData({ ...stagedFilterData, searchValue: e.target.value })}
                   />
-                  <label htmlFor="productSearching">Tim kiem san pham</label>
+                  <label htmlFor="productSearching">Tìm kiếm sản phẩm</label>
                 </div>
                 Lọc dữ liệu theo:
                 <select
                   className="form-select form-select-sm mb-3"
-                  value={stagedFilterType}
-                  onChange={(e) => setStagedFilterType(e.target.value)}>
+                  value={stagedFilterData.filterType}
+                  onChange={(e) => setStagedFilterData({ ...stagedFilterData, filterType: e.target.value })}>
                   <option value="all">Tất cả</option>
                   <option value="zero">Chênh lệch = 0</option>
                   <option value="positive">Chênh lệch &gt; 0</option>
@@ -128,8 +136,8 @@ const ViewData = () => {
                 Sắp xếp theo:
                 <select
                   className="form-select form-select-sm mb-3"
-                  value={stagedSortType}
-                  onChange={(e) => setStagedSortType(e.target.value)}>
+                  value={stagedFilterData.sortType}
+                  onChange={(e) => setStagedFilterData({ ...stagedFilterData, sortType: e.target.value })}>
                   <option value="maSP-asc">Mã SP A-Z</option>
                   <option value="maSP-desc">Mã SP Z-A</option>
                 </select>
@@ -140,14 +148,14 @@ const ViewData = () => {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal">
-                  Dong
+                  Đóng
                 </button>
                 <button
                   type="button"
                   className="btn btn-primary"
                   data-bs-dismiss="modal"
                   onClick={applyFilters}>
-                  Ap dung
+                  Áp dụng
                 </button>
               </div>
             </div>

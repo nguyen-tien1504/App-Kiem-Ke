@@ -67,7 +67,7 @@ function HomePage() {
             />
           ))}
         </div>
-        <div className="mt-2">Tong so luong san pham: {data.length}</div>
+        <div className="mt-2">Tổng số lượng sản phẩm: {data.length}</div>
       </div>
 
       <div className="input-group mt-2">
@@ -76,10 +76,10 @@ function HomePage() {
             type="text"
             className="form-control"
             id="productSearching"
-            placeholder="Tim kiem san pham"
+            placeholder="Tìm kiếm sản phẩm"
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          <label htmlFor="productSearching">Tim kiem san pham</label>
+          <label htmlFor="productSearching">Tìm kiếm sản phẩm</label>
         </div>
       </div>
       <div className="input-group mt-2 gap-2">
@@ -87,19 +87,19 @@ function HomePage() {
           <input
             className="form-control rounded-2"
             id="floatingInputGrid"
-            placeholder="Nhap so luong"
+            placeholder="Nhập số lượng"
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
-          <label htmlFor="floatingInputGrid">Nhap so luong</label>
+          <label htmlFor="floatingInputGrid">Nhập số lượng</label>
           <button
             className="btn btn-primary py-2 mt-2"
             onClick={() => {
               onChangeQuantity(amount);
               setAmount("");
             }}>
-            Cap nhat so luong
+            Cập nhật số lượng
           </button>
         </div>
         <div className="d-flex flex-column gap-1">
