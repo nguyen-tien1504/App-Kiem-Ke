@@ -52,7 +52,7 @@ const ViewData = () => {
   };
   return (
     <div
-      className="p-2"
+      className="p-1"
       style={{ fontSize: "12px" }}>
       <div className="row text-center">
         <div className="col-2">Mã SP</div>
