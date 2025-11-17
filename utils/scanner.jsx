@@ -37,7 +37,20 @@ const Scanner = ({ onDetected }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+  // Nếu đang quét và đổi camera, thì dừng và khởi động lại
+  if (isScanning) {
+    stopScanner();
+    setTimeout(() => {
+      startScanner();
+    }, 300);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [deviceId]);
+
   const startScanner = async () => {
+    if (isScanning) return; // Ngăn gọi lặp
+    stopScanner()
     if (!videoRef.current || !codeReaderRef.current) return;
     setIsScanning(true);
 
@@ -57,6 +70,12 @@ const Scanner = ({ onDetected }) => {
             // NotFoundException: frame không tìm thấy mã, bình thường
             console.warn("Decode error:", error);
           }
+        },
+        {
+          video: {
+            facingMode: "environment",
+          },
+          tryHarder: true,
         }
       );
     } catch (err) {
