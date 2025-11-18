@@ -105,8 +105,13 @@ const Scanner = ({ onDetected }) => {
             }
           },
           {
-            video: { facingMode: "environment" },
+            video: {
+              facingMode: "environment",
+              width: { ideal: 1920 },
+              height: { ideal: 1080 },
+            },
             tryHarder: true,
+            focusMode: "continuous",
           }
         );
       } catch (err) {
