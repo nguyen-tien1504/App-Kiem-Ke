@@ -38,53 +38,85 @@ const Scanner = ({ onDetected }) => {
   }, []);
 
   useEffect(() => {
-  // Nếu đang quét và đổi camera, thì dừng và khởi động lại
-  if (isScanning) {
-    stopScanner();
-    setTimeout(() => {
-      startScanner();
-    }, 300);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [deviceId]);
+    // Nếu đang quét và đổi camera, thì dừng và khởi động lại
+    if (isScanning) {
+      stopScanner();
+      setTimeout(() => {
+        startScanner();
+      }, 300);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deviceId]);
+
+  //   const startScanner = async () => {
+  //     if (isScanning) return; // Ngăn gọi lặp
+  //     await stopScanner();
+  //     if (!videoRef.current || !codeReaderRef.current) return;
+  //     setIsScanning(true);
+
+  //     try {
+  //       await codeReaderRef.current.decodeFromVideoDevice(
+  //         deviceId || undefined,
+  //         videoRef.current,
+  //         (result, error) => {
+  //           if (result) {
+  //             const text = result.getText();
+  //             // gọi callback với dữ liệu quét được
+  //             onDetected && onDetected(text);
+
+  //             // nếu chỉ cần 1 lần quét: dừng scanner
+  //             stopScanner();
+  //           } else if (error && error?.name !== "NotFoundException") {
+  //             // NotFoundException: frame không tìm thấy mã, bình thường
+  //             console.warn("Decode error:", error);
+  //           }
+  //         },
+  //         {
+  //           video: {
+  //             facingMode: "environment",
+  //           },
+  //           tryHarder: true,
+  //         }
+  //       );
+  //     } catch (err) {
+  //       console.error("Start scanner failed:", err);
+  //       setIsScanning(false);
+  //     }
+  //   };
 
   const startScanner = async () => {
-    if (isScanning) return; // Ngăn gọi lặp
-    stopScanner()
-    if (!videoRef.current || !codeReaderRef.current) return;
-    setIsScanning(true);
+    await stopScanner(); // giải phóng stream cũ
 
-    try {
-      await codeReaderRef.current.decodeFromVideoDevice(
-        deviceId || undefined,
-        videoRef.current,
-        (result, error) => {
-          if (result) {
-            const text = result.getText();
-            // gọi callback với dữ liệu quét được
-            onDetected && onDetected(text);
+    setTimeout(async () => {
+      if (!videoRef.current) return;
+      setIsScanning(true);
 
-            // nếu chỉ cần 1 lần quét: dừng scanner
-            stopScanner();
-          } else if (error && error?.name !== "NotFoundException") {
-            // NotFoundException: frame không tìm thấy mã, bình thường
-            console.warn("Decode error:", error);
-          }
-        },
-        {
-          video: {
-            facingMode: "environment",
+      try {
+        await codeReaderRef.current.decodeFromVideoDevice(
+          deviceId || undefined,
+          videoRef.current,
+          (result, err) => {
+            if (result) {
+              onDetected?.(result.getText());
+              stopScanner();
+            }
+            if (err) {
+              console.log(err);
+            }
           },
-          tryHarder: true,
-        }
-      );
-    } catch (err) {
-      console.error("Start scanner failed:", err);
-      setIsScanning(false);
-    }
+          {
+            video: { facingMode: "environment" },
+            tryHarder: true,
+          }
+        );
+      } catch (err) {
+        console.error("Start error:", err);
+        setIsScanning(false);
+      }
+    }, 200); // ⏱ camera needs release time
   };
 
-  const stopScanner = () => {
+  const stopScanner = async () => {
     try {
       if (codeReaderRef.current) codeReaderRef.current.reset();
     } catch (e) {

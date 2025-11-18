@@ -9,7 +9,7 @@ const App = () => {
     <div className="pb-4">
       <Navbar />
       <Outlet />
-      {/* <div style={{ padding: 20 }}>
+      <div style={{ padding: 20 }}>
         <h3>Demo quét QR / Barcode</h3>
         <Scanner onDetected={(text) => setResult(text)} />
         <div style={{ marginTop: 16 }}>
@@ -25,7 +25,7 @@ const App = () => {
             {result || <span style={{ color: "#888" }}>Chưa quét</span>}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
