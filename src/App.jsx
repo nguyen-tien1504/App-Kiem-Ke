@@ -1,10 +1,8 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/navbar";
-import Scanner from "../utils/scanner";
-import { useState } from "react";
+// import Scanner from "../utils/scanner";
 
 const App = () => {
-  const [result, setResult] = useState("");
   return (
     <div className="pb-4">
       <Navbar />
