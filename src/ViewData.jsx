@@ -84,17 +84,15 @@ const ViewData = () => {
           type="button"
           className="btn btn-primary"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal">
+          data-bs-target="#filterModal">
           Tìm kiếm nâng cao
         </button>
 
         {/* Tim kiem nang cao modal */}
         <div
           className="modal fade"
-          id="exampleModal"
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
+          id="filterModal"
+          tabIndex="-1">
           <div className="modal-dialog mx-2">
             <div className="modal-content">
               <div className="modal-header">
@@ -119,7 +117,12 @@ const ViewData = () => {
                     id="productSearching"
                     placeholder="Tim kiem san pham"
                     value={stagedFilterData.searchValue}
-                    onChange={(e) => setStagedFilterData({ ...stagedFilterData, searchValue: e.target.value })}
+                    onChange={(e) =>
+                      setStagedFilterData({
+                        ...stagedFilterData,
+                        searchValue: e.target.value,
+                      })
+                    }
                   />
                   <label htmlFor="productSearching">Tìm kiếm sản phẩm</label>
                 </div>
@@ -127,7 +130,12 @@ const ViewData = () => {
                 <select
                   className="form-select form-select-sm mb-3"
                   value={stagedFilterData.filterType}
-                  onChange={(e) => setStagedFilterData({ ...stagedFilterData, filterType: e.target.value })}>
+                  onChange={(e) =>
+                    setStagedFilterData({
+                      ...stagedFilterData,
+                      filterType: e.target.value,
+                    })
+                  }>
                   <option value="all">Tất cả</option>
                   <option value="zero">Chênh lệch = 0</option>
                   <option value="positive">Chênh lệch &gt; 0</option>
@@ -137,7 +145,9 @@ const ViewData = () => {
                 <select
                   className="form-select form-select-sm mb-3"
                   value={stagedFilterData.sortType}
-                  onChange={(e) => setStagedFilterData({ ...stagedFilterData, sortType: e.target.value })}>
+                  onChange={(e) =>
+                    setStagedFilterData({ ...stagedFilterData, sortType: e.target.value })
+                  }>
                   <option value="maSP-asc">Mã SP A-Z</option>
                   <option value="maSP-desc">Mã SP Z-A</option>
                 </select>

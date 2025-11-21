@@ -19,7 +19,13 @@ const ImportExcel = ({ list, setList }) => {
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
           setList(
             rows.map((item) => {
-              const { ["Mã CH"]: _, ["Quy cách"]: __, ["Đơn vị"]: ___, ...rest } = item;
+              const {
+                ["Mã CH"]: _,
+                ["Quy cách"]: __,
+                ["Đơn vị"]: ___,
+                ["Phân loại SP"]: ____,
+                ...rest
+              } = item;
               return {
                 ...rest,
                 ["Thực tế"]: item["Thực tế"] ? item["Thực tế"] : 0,
@@ -32,7 +38,7 @@ const ImportExcel = ({ list, setList }) => {
       };
       reader.readAsArrayBuffer(file);
     } else return;
-    
+
     // reset du lieu input file de lan sau chon cung file van load duoc
     e.target.value = null;
   };

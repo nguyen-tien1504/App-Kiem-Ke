@@ -6,7 +6,8 @@ function HomePage() {
   const [searchValue, setSearchValue] = useState("");
   const [selectedMasp, setSelectedMasp] = useState(null);
   const [amount, setAmount] = useState("");
-
+  console.log(list);
+  
   const boxDelete = useRef(null);
   useEffect(() => {
     if (list && list.length > 0) {
